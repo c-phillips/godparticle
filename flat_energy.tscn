@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://qabpil5il2m8"]
+
+[ext_resource type="Script" path="res://flat_energy.gd" id="1_e75qb"]
+[ext_resource type="Texture2D" uid="uid://dvpvhu5qungc0" path="res://yellow_ball.png" id="2_ntu1w"]
+[ext_resource type="AudioStream" uid="uid://d0ymynp7brvs3" path="res://sounds/shortcuts_deluxe/SFX/Woosh 1.wav" id="3_wkoda"]
+
+[sub_resource type="Curve" id="Curve_68co7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_m81a3"]
+colors = PackedColorArray(0.921569, 0.913725, 0.505882, 0, 0.92, 0.9131, 0.506, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c3r0i"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 268.95
+initial_velocity_max = 268.95
+gravity = Vector3(0, 0, 0)
+linear_accel_max = 1.0
+radial_accel_min = -500.0
+radial_accel_max = -400.0
+tangential_accel_min = -86.37
+tangential_accel_max = 84.84
+scale_min = 0.1
+scale_max = 0.2
+
+[node name="FlatEnergy" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_e75qb")
+
+[node name="Trail" type="Line2D" parent="."]
+width = 25.0
+width_curve = SubResource("Curve_68co7")
+default_color = Color(0.92, 0.9131, 0.506, 1)
+gradient = SubResource("Gradient_m81a3")
+
+[node name="EnergyBall" type="Sprite2D" parent="."]
+texture = ExtResource("2_ntu1w")
+
+[node name="Splash" type="GPUParticles2D" parent="EnergyBall"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_c3r0i")
+texture = ExtResource("2_ntu1w")
+one_shot = true
+explosiveness = 0.92
+randomness = 0.18
+
+[node name="MagnetSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_wkoda")
+volume_db = -5.0

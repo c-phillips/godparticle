@@ -1,0 +1,9 @@
+# Godot 4+ specific ignores
+.godot/
+sounds/shortcuts_deluxe
+*.pack
+*.exe
+exports/
+*.zip
+*.import
+*.jpg

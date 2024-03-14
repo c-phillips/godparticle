@@ -1,0 +1,4 @@
+[gd_resource type="AudioBusLayout" format=3 uid="uid://euk2620h6ogl"]
+
+[resource]
+bus/0/send = &"Layer 2"

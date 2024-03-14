@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bofwcx4bw14jn"]
+
+[resource]
+albedo_color = Color(0, 0, 0, 1)
+subsurf_scatter_strength = 0.7
+backlight = Color(0.729412, 0.360784, 0.247059, 1)
+refraction_scale = 0.72

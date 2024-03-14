@@ -1,0 +1,223 @@
+[gd_scene load_steps=28 format=3 uid="uid://5ipc81ky8ieo"]
+
+[ext_resource type="Script" path="res://PlayerController.gd" id="1_krn5k"]
+[ext_resource type="Script" path="res://ParticlePin.gd" id="1_mu72i"]
+[ext_resource type="Material" uid="uid://dr7pux7kglq0f" path="res://green.tres" id="3_20xvm"]
+[ext_resource type="Material" uid="uid://dk8s3b77btr7s" path="res://red.tres" id="4_rdh7u"]
+[ext_resource type="AudioStream" uid="uid://cnke6rhup0hij" path="res://sounds/shortcuts_deluxe/SFX/Electro-Stutter 2.wav" id="6_a1hub"]
+[ext_resource type="Texture2D" uid="uid://ce6dtpsoao2ux" path="res://sprites/space_ability_base.png" id="6_lrc1o"]
+[ext_resource type="AudioStream" uid="uid://ce3ibdctrvnmb" path="res://sounds/shortcuts_deluxe/Chimes/Chime 1.wav" id="7_lddq0"]
+[ext_resource type="AudioStream" uid="uid://bqhbona6qlnlw" path="res://sounds/shortcuts_deluxe/Chimes/Chime 29.wav" id="7_u0tgk"]
+[ext_resource type="PackedScene" uid="uid://qb6qfqh8fg2i" path="res://cat.tscn" id="9_cp6ni"]
+[ext_resource type="FontFile" uid="uid://cj43jlhnevx3t" path="res://fonts/Outfit-VariableFont_wght.ttf" id="10_q00pq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ymskb"]
+custom_solver_bias = 0.6
+radius = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qj7vu"]
+albedo_color = Color(0.768627, 0.811765, 0.796078, 1)
+metallic = 0.79
+emission_enabled = true
+emission = Color(0.815686, 0.839216, 0.654902, 1)
+emission_energy_multiplier = 9.51
+disable_receive_shadows = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_cxkhg"]
+material = SubResource("StandardMaterial3D_qj7vu")
+radius = 0.3
+height = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4qqx5"]
+material = ExtResource("3_20xvm")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yy2u3"]
+material = ExtResource("4_rdh7u")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fuvco"]
+albedo_color = Color(0.403922, 0.482353, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jjok5"]
+material = SubResource("StandardMaterial3D_fuvco")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3sfpd"]
+height = 5.0
+radius = 4.0
+
+[sub_resource type="Gradient" id="Gradient_sdq6k"]
+offsets = PackedFloat32Array(0, 0.633333, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.580392, 0.627451, 0.384314, 0.101961, 0.752941, 1, 1, 0.419608)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2u2lp"]
+gradient = SubResource("Gradient_sdq6k")
+fill_from = Vector2(1, 0.34188)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7m02j"]
+transparency = 1
+cull_mode = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = SubResource("GradientTexture2D_2u2lp")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ho0fy"]
+material = SubResource("StandardMaterial3D_7m02j")
+radius = 1.341
+height = 7.646
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_g02gq"]
+viewport_path = NodePath("PlayerCamera/PlayMenu/CatThing")
+
+[sub_resource type="FontVariation" id="FontVariation_t42xn"]
+base_font = ExtResource("10_q00pq")
+variation_opentype = {
+2003265652: 900
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6q07i"]
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(0, 0, -19)
+emission_shape = 3
+emission_box_extents = Vector3(5, 5, 20)
+angle_min = -316.2
+angle_max = 327.5
+initial_velocity_max = 4.92
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rp3e"]
+albedo_color = Color(0.717647, 0.772549, 0.607843, 1)
+emission_enabled = true
+emission = Color(0.945098, 0.92549, 0.658824, 1)
+emission_energy_multiplier = 1.81
+emission_operator = 1
+distance_fade_mode = 1
+distance_fade_max_distance = 25.88
+
+[sub_resource type="PrismMesh" id="PrismMesh_6cwss"]
+material = SubResource("StandardMaterial3D_0rp3e")
+size = Vector3(0.05, 0.05, 0.05)
+
+[node name="Particle" type="Node3D"]
+script = ExtResource("1_mu72i")
+
+[node name="PlayerBody" type="CharacterBody3D" parent="."]
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_krn5k")
+
+[node name="Collider" type="CollisionShape3D" parent="PlayerBody"]
+shape = SubResource("SphereShape3D_ymskb")
+
+[node name="ParticleMesh" type="MeshInstance3D" parent="PlayerBody"]
+visible = false
+mesh = SubResource("SphereMesh_cxkhg")
+skeleton = NodePath("")
+
+[node name="Y" type="MeshInstance3D" parent="PlayerBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.491916, 0)
+visible = false
+mesh = SubResource("CylinderMesh_4qqx5")
+
+[node name="X" type="MeshInstance3D" parent="PlayerBody"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.483913, 0, 0)
+visible = false
+mesh = SubResource("CylinderMesh_yy2u3")
+
+[node name="Z" type="MeshInstance3D" parent="PlayerBody"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, 0.494)
+visible = false
+mesh = SubResource("CylinderMesh_jjok5")
+
+[node name="PlayerGlow" type="OmniLight3D" parent="PlayerBody"]
+visible = false
+light_color = Color(1, 1, 0.709804, 1)
+light_energy = 13.223
+light_volumetric_fog_energy = 1.722
+omni_range = 199.418
+
+[node name="Collector" type="Area3D" parent="PlayerBody"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -2.5)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody/Collector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.68434e-14)
+shape = SubResource("CylinderShape3D_3sfpd")
+
+[node name="Swooshything" type="MeshInstance3D" parent="PlayerBody/Collector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.47435, -2.39291e-07)
+mesh = SubResource("CapsuleMesh_ho0fy")
+skeleton = NodePath("../..")
+
+[node name="SmallCollectedSound" type="AudioStreamPlayer" parent="PlayerBody"]
+stream = ExtResource("7_u0tgk")
+volume_db = 3.0
+max_polyphony = 64
+
+[node name="CollisionSoundA" type="AudioStreamPlayer" parent="PlayerBody"]
+stream = ExtResource("6_a1hub")
+
+[node name="CollisionSoundB" type="AudioStreamPlayer" parent="PlayerBody"]
+stream = ExtResource("6_a1hub")
+volume_db = -3.0
+
+[node name="CollisionSoundC" type="AudioStreamPlayer" parent="PlayerBody"]
+stream = ExtResource("7_lddq0")
+
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+current = true
+fov = 45.0
+
+[node name="PlayMenu" type="Node3D" parent="PlayerCamera"]
+
+[node name="AbilityBar" type="Node3D" parent="PlayerCamera/PlayMenu"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 5, -5, -10)
+
+[node name="SpaceAbility" type="Node3D" parent="PlayerCamera/PlayMenu/AbilityBar"]
+
+[node name="Sprite3D" type="Sprite3D" parent="PlayerCamera/PlayMenu/AbilityBar/SpaceAbility"]
+modulate = Color(1, 1, 1, 0.0980392)
+pixel_size = 0.005
+texture = ExtResource("6_lrc1o")
+
+[node name="Label3D" type="Label3D" parent="PlayerCamera/PlayMenu/AbilityBar/SpaceAbility"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 0)
+text = "S"
+font_size = 100
+
+[node name="CatThing" type="SubViewport" parent="PlayerCamera/PlayMenu"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 1024)
+
+[node name="Cat" parent="PlayerCamera/PlayMenu/CatThing" instance=ExtResource("9_cp6ni")]
+
+[node name="CatWindow" type="Sprite3D" parent="PlayerCamera/PlayMenu"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -1.96259, 0, -2.38055)
+pixel_size = 0.003
+texture = SubResource("ViewportTexture_g02gq")
+
+[node name="Timer" type="Label3D" parent="PlayerCamera/PlayMenu"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 2.59137, 1.58052, -3)
+text = "0.0"
+font = SubResource("FontVariation_t42xn")
+font_size = 60
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 256
+lifetime = 0.99
+randomness = 1.0
+visibility_aabb = AABB(-136, -85, -121, 272, 170, 242)
+process_material = SubResource("ParticleProcessMaterial_6q07i")
+draw_pass_1 = SubResource("PrismMesh_6cwss")

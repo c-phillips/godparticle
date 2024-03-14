@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://bo0rw1sc5thvi"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_hv6c7"]
+[ext_resource type="PackedScene" uid="uid://dr6vysoyfh5cj" path="res://level_base.tscn" id="2_li2il"]
+[ext_resource type="Shape2D" uid="uid://onlk75dnxfkj" path="res://hex_collider_a.tres" id="4_j232h"]
+[ext_resource type="Script" path="res://D6.gd" id="4_jvukc"]
+[ext_resource type="Script" path="res://Roller.gd" id="4_xrjr0"]
+[ext_resource type="PackedScene" uid="uid://40io0njltmc3" path="res://menu.tscn" id="6_66myy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mywg7"]
+size = Vector2(100, 86)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rpyvt"]
+size = Vector2(86, 86)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tic04"]
+font_size = 200
+
+[node name="GameRoot" type="Node3D"]
+process_mode = 3
+script = ExtResource("1_hv6c7")
+
+[node name="LevelBase" parent="." instance=ExtResource("2_li2il")]
+
+[node name="Menu" parent="." instance=ExtResource("6_66myy")]
+visible = false
+
+[node name="Roller" type="Control" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_xrjr0")
+
+[node name="D6" type="RigidBody2D" parent="Roller"]
+script = ExtResource("4_jvukc")
+
+[node name="LinearCollider" type="CollisionShape2D" parent="Roller/D6"]
+shape = SubResource("RectangleShape2D_mywg7")
+
+[node name="SquareCollider" type="CollisionShape2D" parent="Roller/D6"]
+shape = SubResource("RectangleShape2D_rpyvt")
+
+[node name="HexCollider" type="CollisionShape2D" parent="Roller/D6"]
+shape = ExtResource("4_j232h")
+
+[node name="Label" type="Label" parent="Roller"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -37.0
+offset_right = 60.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "rolling..."
+label_settings = SubResource("LabelSettings_tic04")
+horizontal_alignment = 1
+vertical_alignment = 1

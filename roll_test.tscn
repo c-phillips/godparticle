@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://6bb7mrfjtwt1"]
+
+[ext_resource type="Script" path="res://roll_test.gd" id="1_hmxsy"]
+[ext_resource type="AudioStream" uid="uid://bd78ojb6pcmin" path="res://sounds/shortcuts_deluxe/Loops/Loop 2_1.wav" id="2_tpxfv"]
+[ext_resource type="AudioStream" uid="uid://cu2i6ipairh1v" path="res://sounds/shortcuts_deluxe/Jingles/Jingle 8.wav" id="3_iqlrj"]
+[ext_resource type="AudioStream" uid="uid://cxa4l64njhkmf" path="res://sounds/shortcuts_deluxe/Jingles/Jingle 7.wav" id="4_uh6kg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j0xkd"]
+size = Vector2(5000, 200)
+
+[node name="RollArena" type="Control"]
+process_mode = 3
+process_physics_priority = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hmxsy")
+num_dice = 12
+throw_scale = 3000.0
+
+[node name="TopWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(961.5, 0)
+shape = SubResource("RectangleShape2D_j0xkd")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(961.5, 0)
+shape = SubResource("RectangleShape2D_j0xkd")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(961.5, 0)
+shape = SubResource("RectangleShape2D_j0xkd")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(961.5, 0)
+shape = SubResource("RectangleShape2D_j0xkd")
+
+[node name="RollButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.817
+anchor_top = 0.877
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Roll Dice"
+flat = true
+
+[node name="RollMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_tpxfv")
+
+[node name="RollSuccess" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_iqlrj")
+
+[node name="RollFail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_uh6kg")

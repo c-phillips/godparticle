@@ -1,0 +1,189 @@
+[gd_scene load_steps=11 format=3 uid="uid://4xyp0ngalb4e"]
+
+[ext_resource type="Animation" uid="uid://bv21unwqiv8iq" path="res://animations/FingerGunShoot.res" id="1_rtt3u"]
+[ext_resource type="Animation" uid="uid://ddl5v82el7cxc" path="res://animations/smoke.res" id="2_kc30n"]
+[ext_resource type="AnimationLibrary" uid="uid://cvvq6f0snc2ir" path="res://animations/animations.res" id="3_huy3h"]
+[ext_resource type="Script" path="res://start_button.gd" id="4_f5t4r"]
+[ext_resource type="AudioStream" uid="uid://cn5ie5yb4hv0f" path="res://sounds/shortcuts_deluxe/Chimes/Chime 27.wav" id="5_00hbx"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_la4po"]
+_data = {
+"FingerGunShoot": ExtResource("1_rtt3u"),
+"smoke": ExtResource("2_kc30n")
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_et7xp"]
+direction = Vector3(0, 0, 1)
+spread = 43.441
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(-2, -2, -2)
+scale_min = 0.8
+scale_max = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_rv3as"]
+radius = 0.01
+height = 0.01
+radial_segments = 8
+rings = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_fjdqt"]
+size = Vector3(1, 0.5, 0.05)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_63vjn"]
+
+[node name="Hand" type="Node3D"]
+
+[node name="HandModel" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.422368, -2.46219)
+
+[node name="FingerBarrel" type="CSGCylinder3D" parent="HandModel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.422904, 1.46065)
+radius = 0.302397
+
+[node name="Thumb" type="CSGCombiner3D" parent="HandModel"]
+transform = Transform3D(0.979554, 0, -0.20118, 0, 1, 0, 0.20118, 0, 0.979554, 0.086944, 1.04524, -1.40475)
+
+[node name="ThumbBase" type="CSGCylinder3D" parent="HandModel/Thumb"]
+transform = Transform3D(0.999872, -0.016117, -0.000633377, 0.016117, 0.996787, 0.0784741, -0.000633422, -0.078474, 0.996917, 0, 0.0733902, 0)
+radius = 0.302397
+height = 1.19402
+
+[node name="ThumbTip" type="CSGCylinder3D" parent="HandModel/Thumb"]
+transform = Transform3D(0.998925, -0.0461073, -0.00524525, 0.0461073, 0.973384, 0.224498, -0.00524535, -0.224498, 0.974463, -0.0188833, 0.81827, -0.0919437)
+radius = 0.302397
+height = 0.450424
+
+[node name="Palm" type="CSGCombiner3D" parent="HandModel"]
+
+[node name="PalmMain" type="CSGBox3D" parent="HandModel/Palm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.189453, -0.692627)
+size = Vector3(0.468506, 1.74902, 2.38525)
+
+[node name="PalmBulge" type="CSGBox3D" parent="HandModel/Palm"]
+transform = Transform3D(0.96429, 0, -0.264849, 0, 1, 0, 0.264849, 0, 0.96429, 0.178478, -0.189697, -1.21674)
+size = Vector3(0.468506, 1.74951, 1.35681)
+
+[node name="ThumbConnector" type="CSGBox3D" parent="HandModel/Palm"]
+transform = Transform3D(0.959888, -0.149314, -0.237317, 2.23517e-08, 0.846407, -0.532536, 0.280382, 0.511176, 0.812456, 0.0855918, 0.628568, -1.63941)
+size = Vector3(0.515381, 0.770264, 0.653015)
+
+[node name="OtherFingers" type="CSGCombiner3D" parent="HandModel"]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="HandModel/OtherFingers"]
+transform = Transform3D(0.963153, 0, -0.268953, 0, 1, 0, 0.268953, 0, 0.963153, 0.224991, -0.350085, 0.208533)
+size = Vector3(1.17773, 1.14307, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="HandModel/OtherFingers"]
+transform = Transform3D(0.45161, 0, -0.892216, 0, 1, 0, 0.892216, 0, 0.45161, 0.397556, -0.350085, -0.511998)
+size = Vector3(1.17773, 1.14307, 0.587402)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_la4po"),
+"animations": ExtResource("3_huy3h")
+}
+
+[node name="Smoke" type="CSGCombiner3D" parent="."]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.299174)
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.402201, 0.207354, 0.299174)
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.274943, 0.207354, 0.727774)
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.112206, 0.207354, 0.727774)
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.112206, 0.207354, 1.30566)
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.0958762, -0.271319, 0.611443)
+
+[node name="CSGSphere3D7" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.572847, -0.085089, 0.611443)
+
+[node name="CSGSphere3D8" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.572847, -0.085089, 1.00274)
+
+[node name="CSGSphere3D9" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.274439, -0.085089, 1.00274)
+
+[node name="CSGSphere3D10" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.482853, 0.16625, 1.18902)
+
+[node name="CSGSphere3D11" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.107965, -0.295125, 1.18902)
+
+[node name="CSGSphere3D12" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.249413, 0.158618, 1.99515)
+
+[node name="CSGSphere3D13" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.162972, 0.158618, 1.90081)
+
+[node name="CSGSphere3D14" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.598933, 0.30932, 1.90081)
+
+[node name="CSGSphere3D15" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.772625, -0.269648, 0.174268)
+
+[node name="CSGSphere3D16" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.772625, -0.269648, 0.824289)
+
+[node name="CSGSphere3D17" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.772625, 0.577183, 0.824289)
+
+[node name="CSGSphere3D18" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -1.05046, 0.577183, 0.824289)
+
+[node name="CSGSphere3D19" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -1.05046, -0.337315, 1.49131)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 128
+lifetime = 0.27
+one_shot = true
+explosiveness = 0.94
+randomness = 0.24
+process_material = SubResource("ParticleProcessMaterial_et7xp")
+draw_pass_1 = SubResource("SphereMesh_rv3as")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"animations": ExtResource("3_huy3h")
+}
+
+[node name="StartButton" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.17215, -4.76837e-07, 5.18411)
+script = ExtResource("4_f5t4r")
+action = 4
+sound_source = ExtResource("5_00hbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StartButton"]
+transform = Transform3D(0.995597, -0.0694792, 0.0629299, 0.0673361, 0.997096, 0.0355615, -0.0652179, -0.0311674, 0.997384, -0.0163836, -0.0198119, 0.00131965)
+mesh = SubResource("BoxMesh_fjdqt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartButton"]
+shape = SubResource("SphereShape3D_63vjn")
+
+[node name="Label3D" type="Label3D" parent="StartButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.102827)
+text = "START"
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.841831, 0, 0.539741, 0, 1, 0, -0.539741, 0, 0.841831, 7.30483, 0, 9.35703)
+light_energy = 9.834
+spot_range = 20.1345
+spot_angle = 62.3441
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer" parent="."]

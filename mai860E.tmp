@@ -1,0 +1,113 @@
+[gd_scene load_steps=9 format=3 uid="uid://bo0rw1sc5thvi"]
+
+[ext_resource type="Script" path="res://MainPathProgressor.gd" id="1_bqr4i"]
+[ext_resource type="PackedScene" uid="uid://5ipc81ky8ieo" path="res://player.tscn" id="1_kqtpl"]
+[ext_resource type="Script" path="res://EnvironmentGenerator.gd" id="3_3fsmr"]
+
+[sub_resource type="Curve3D" id="Curve3D_guhyo"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 100),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_yuvjh"]
+
+[sub_resource type="Sky" id="Sky_k0hup"]
+
+[sub_resource type="Environment" id="Environment_w0dxo"]
+background_mode = 2
+sky = SubResource("Sky_k0hup")
+ambient_light_color = Color(0.94902, 0.94902, 0.94902, 1)
+fog_enabled = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_y7drr"]
+
+[node name="LevelBase" type="Node3D"]
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_guhyo")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.999988, 0, -8.74227e-08, 0, 0.999992, 0, 8.74218e-08, 0, -0.999999, 0, 0, 0)
+script = ExtResource("1_bqr4i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(1, 8.74237e-08, 8.74237e-08, -8.74237e-08, -4.37114e-08, 1, 8.74237e-08, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TubeTrailMesh_yuvjh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_w0dxo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06498, 0, 6.16521)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.96559, 0, 14.0746)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D/OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1801, 0, 14.0746)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D/OmniLight3D/OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.58812, 0, 14.0746)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D/OmniLight3D/OmniLight3D/OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6849, 0, 14.0746)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D/OmniLight3D/OmniLight3D/OmniLight3D/OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.0284, 0, 14.0746)
+
+[node name="EnvironmentGenerator" type="Node3D" parent="."]
+script = ExtResource("3_3fsmr")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = -1
+anchor_right = 0.88
+anchor_bottom = 0.966
+offset_left = 3.0
+offset_top = 1.0
+offset_right = -376.76
+offset_bottom = -112.968
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(500, 300)
+size_2d_override = Vector2i(300, 150)
+render_target_update_mode = 4
+
+[node name="SideView" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.291745, -0.461532, 0.837779, -0.151782, 0.887124, 0.43586, -0.944376, 0, -0.328867, 32.2107, 13.7082, 35.256)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 20.8767)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 30.3404)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 40.2335)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 54.4372)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 65.7479)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 73.2353)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.769, 0, 0, 0, -3.39594e-07, -7.769, 0, 7.769, -3.39594e-07, 0, 0, 88.1307)
+mesh = SubResource("TorusMesh_y7drr")
+
+[node name="Player" parent="." instance=ExtResource("1_kqtpl")]
+transform = Transform3D(-0.999988, 0, -8.74227e-08, 0, 0.999992, 0, 8.74218e-08, 0, -0.999999, 0, 0, 0)

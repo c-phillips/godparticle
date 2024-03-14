@@ -1,0 +1,338 @@
+[gd_scene load_steps=23 format=3 uid="uid://4xyp0ngalb4e"]
+
+[ext_resource type="Animation" uid="uid://bv21unwqiv8iq" path="res://animations/FingerGunShoot.res" id="1_rtt3u"]
+[ext_resource type="Animation" uid="uid://ddl5v82el7cxc" path="res://animations/smoke.res" id="2_kc30n"]
+[ext_resource type="AnimationLibrary" uid="uid://cvvq6f0snc2ir" path="res://animations/animations.res" id="3_huy3h"]
+[ext_resource type="Script" path="res://start_button.gd" id="4_f5t4r"]
+[ext_resource type="Material" uid="uid://bofwcx4bw14jn" path="res://smoke.tres" id="4_pdcgk"]
+[ext_resource type="AudioStream" uid="uid://cn5ie5yb4hv0f" path="res://sounds/shortcuts_deluxe/Chimes/Chime 27.wav" id="5_00hbx"]
+[ext_resource type="Texture2D" uid="uid://7hqaa03m48hp" path="res://sprites/cloudA.png" id="6_dr62j"]
+[ext_resource type="Texture2D" uid="uid://ch7ofwouprpu7" path="res://sprites/cloudB.png" id="7_aw2lf"]
+[ext_resource type="Texture2D" uid="uid://cyjihwkylgpr7" path="res://logo.png" id="7_brjdx"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_la4po"]
+_data = {
+"FingerGunShoot": ExtResource("1_rtt3u"),
+"smoke": ExtResource("2_kc30n")
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_et7xp"]
+direction = Vector3(0, 0, 1)
+spread = 43.441
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(-2, -2, -2)
+scale_min = 0.8
+scale_max = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_rv3as"]
+radius = 0.01
+height = 0.01
+radial_segments = 8
+rings = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_fjdqt"]
+size = Vector3(1, 0.5, 0.05)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_63vjn"]
+
+[sub_resource type="Gradient" id="Gradient_ilh2m"]
+offsets = PackedFloat32Array(0.204444, 0.771111)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_30a1s"]
+gradient = SubResource("Gradient_ilh2m")
+width = 1024
+height = 1024
+fill = 1
+fill_from = Vector2(0.290598, 0.529915)
+fill_to = Vector2(0.245014, 0.319088)
+
+[sub_resource type="Gradient" id="Gradient_q5856"]
+offsets = PackedFloat32Array(0.310502, 0.484018, 1)
+colors = PackedColorArray(0.81788, 0.7544, 0.92, 1, 0.87, 0.87, 0.87, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_baqy4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m8dxt"]
+color_ramp = SubResource("Gradient_q5856")
+noise = SubResource("FastNoiseLite_baqy4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwq6w"]
+render_priority = 1
+transparency = 1
+blend_mode = 3
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_m8dxt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcxaw"]
+next_pass = SubResource("StandardMaterial3D_bwq6w")
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_30a1s")
+
+[sub_resource type="SphereMesh" id="SphereMesh_e7vwj"]
+material = SubResource("StandardMaterial3D_mcxaw")
+flip_faces = true
+radius = 500.0
+height = 1000.0
+
+[node name="Hand" type="Node3D"]
+
+[node name="HandModel" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.994412, -0.0431345, -0.0963568, 0.0701706, 0.95198, 0.298011, 0.0788751, -0.303107, 0.949687, -0.297578, 0.500823, -3.0253)
+
+[node name="FingerBarrel" type="CSGCylinder3D" parent="HandModel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.422904, 1.46065)
+radius = 0.302397
+
+[node name="Thumb" type="CSGCombiner3D" parent="HandModel"]
+transform = Transform3D(0.979554, 0, -0.20118, 0, 1, 0, 0.20118, 0, 0.979554, 0.086944, 1.04524, -1.40475)
+
+[node name="ThumbBase" type="CSGCylinder3D" parent="HandModel/Thumb"]
+transform = Transform3D(0.966415, 0.198248, -0.163538, -0.198248, 0.170141, -0.965273, -0.163539, 0.965273, 0.203728, 0.126373, -0.0841035, 0.615316)
+radius = 0.302397
+height = 1.19402
+
+[node name="ThumbTip" type="CSGCylinder3D" parent="HandModel/Thumb"]
+transform = Transform3D(0.950518, 0.196131, -0.240942, -0.196131, -0.222638, -0.954971, -0.240942, 0.954969, -0.173154, 0.269023, -0.0295403, 1.30988)
+radius = 0.302397
+height = 0.450424
+
+[node name="Palm" type="CSGCombiner3D" parent="HandModel"]
+
+[node name="PalmMain" type="CSGBox3D" parent="HandModel/Palm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.189453, -0.692627)
+size = Vector3(0.468506, 1.74902, 2.38525)
+
+[node name="PalmBulge" type="CSGBox3D" parent="HandModel/Palm"]
+transform = Transform3D(1.25358, 0, -0.264849, 0, 0.9, 0, 0.344304, 0, 0.96429, 0.178478, -0.189697, -1.21674)
+size = Vector3(0.468506, 1.74951, 1.35681)
+
+[node name="ThumbConnector" type="CSGBox3D" parent="HandModel/Palm"]
+transform = Transform3D(0.959888, -0.149314, -0.237317, -0.116913, 0.556163, -0.822808, 0.254843, 0.81755, 0.516398, 0.0855918, 0.673858, -1.52078)
+size = Vector3(0.515381, 0.770264, 0.653015)
+
+[node name="OtherFingers" type="CSGCombiner3D" parent="HandModel"]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="HandModel/OtherFingers"]
+transform = Transform3D(0.963153, 0, -0.268953, 0, 1, 0, 0.268953, 0, 0.963153, 0.224991, -0.350085, 0.208533)
+size = Vector3(1.17773, 1.14307, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="HandModel/OtherFingers"]
+transform = Transform3D(0.45161, 0, -0.892216, 0, 1, 0, 0.892216, 0, 0.45161, 0.397556, -0.350085, -0.511998)
+size = Vector3(1.17773, 1.14307, 0.587402)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_la4po"),
+"animations": ExtResource("3_huy3h")
+}
+
+[node name="Smoke" type="CSGCombiner3D" parent="."]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.775729, 0, 0, 0, 0.775729, 0, 0, 0, 0.775729, 0, 0, 0.299174)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.976612, 0, 0, 0, 0.976612, 0, 0, 0, 0.976612, -0.402201, 0.207354, 0.299174)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.603648, 0, 0, 0, 0.603648, 0, 0, 0, 0.603648, -0.274943, 0.207354, 0.727774)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.879385, 0, 0, 0, 0.879385, 0, 0, 0, 0.879385, 0.112206, 0.207354, 0.727774)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.379092, 0, 0, 0, 0.379092, 0, 0, 0, 0.379092, 0.112206, 0.207354, 1.30566)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.672131, 0, 0, 0, 0.672131, 0, 0, 0, 0.672131, -0.0958762, -0.271319, 0.611443)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D7" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.591561, 0, 0, 0, 0.591561, 0, 0, 0, 0.591561, 0.572847, -0.085089, 0.611443)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D8" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.119037, 0, 0, 0, 0.119037, 0, 0, 0, 0.119037, 0.572847, -0.085089, 1.00274)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D9" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.379092, 0, 0, 0, 0.379092, 0, 0, 0, 0.379092, -0.274439, -0.085089, 1.00274)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D10" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0214852, 0, 0, 0, 0.0214852, 0, 0, 0, 0.0214852, -0.482853, 0.16625, 1.18902)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D11" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0864369, 0, 0, 0, 0.0864369, 0, 0, 0, 0.0864369, 0.107965, -0.295125, 1.18902)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D12" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0915846, 0, 0, 0, 0.0915846, 0, 0, 0, 0.0915846, 0.249413, 0.158618, 1.99515)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D13" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0488695, 0, 0, 0, 0.0488695, 0, 0, 0, 0.0488695, -0.162972, 0.158618, 1.90081)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D14" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0488695, 0, 0, 0, 0.0488695, 0, 0, 0, 0.0488695, 0.598933, 0.30932, 1.90081)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D15" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.476891, 0, 0, 0, 0.476891, 0, 0, 0, 0.476891, 0.772625, -0.269648, 0.174268)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D16" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.03911, 0, 0, 0, 0.03911, 0, 0, 0, 0.03911, 0.772625, -0.269648, 0.824289)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D17" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0649517, 0, 0, 0, 0.0649517, 0, 0, 0, 0.0649517, 0.772625, 0.577183, 0.824289)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D18" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0915846, 0, 0, 0, 0.0915846, 0, 0, 0, 0.0915846, -1.05046, 0.577183, 0.824289)
+material = ExtResource("4_pdcgk")
+
+[node name="CSGSphere3D19" type="CSGSphere3D" parent="Smoke"]
+transform = Transform3D(0.0152032, 0, 0, 0, 0.0152032, 0, 0, 0, 0.0152032, -1.05046, -0.337315, 1.49131)
+material = ExtResource("4_pdcgk")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 128
+lifetime = 0.27
+one_shot = true
+explosiveness = 0.94
+randomness = 0.24
+process_material = SubResource("ParticleProcessMaterial_et7xp")
+draw_pass_1 = SubResource("SphereMesh_rv3as")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"animations": ExtResource("3_huy3h")
+}
+
+[node name="StartButton" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.17215, -4.76837e-07, 5.18411)
+priority = 1
+script = ExtResource("4_f5t4r")
+action = 4
+sound_source = ExtResource("5_00hbx")
+action_delay = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StartButton"]
+transform = Transform3D(0.995597, -0.0694792, 0.0629299, 0.0673361, 0.997096, 0.0355615, -0.0652179, -0.0311674, 0.997384, -0.0163836, -0.0198119, 0.00131965)
+mesh = SubResource("BoxMesh_fjdqt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartButton"]
+shape = SubResource("SphereShape3D_63vjn")
+
+[node name="Label3D" type="Label3D" parent="StartButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.102827)
+text = "START"
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.841831, 0, 0.539741, 0, 1, 0, -0.539741, 0, 0.841831, 7.30483, 0, 9.35703)
+light_energy = 9.834
+spot_range = 20.1345
+spot_angle = 62.3441
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer" parent="."]
+
+[node name="Heaven" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.279491, -0.10179, 0.954737, -0.115285, -0.990728, -0.0718791, 0.953202, -0.0899767, -0.288635, 0, 0, 0)
+mesh = SubResource("SphereMesh_e7vwj")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.250289, 0.137501, 0.958358, -0.481494, 0.87645, 0, -0.839952, -0.461443, 0.285571, -227.995, 0, -126.29)
+cast_shadow = 0
+pixel_size = 0.4544
+render_priority = 2
+texture = ExtResource("6_dr62j")
+
+[node name="Logo" type="Sprite3D" parent="."]
+transform = Transform3D(0.459611, 0, 0.88812, 0, 1, 0, -0.88812, 0, 0.459611, 0, 3.34882, 2.8995)
+render_priority = 2
+texture = ExtResource("7_brjdx")
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform3D(-0.770917, -0.423517, -0.475732, -0.481494, 0.87645, 7.14032e-09, 0.416955, 0.229062, -0.87959, 43.8567, -16.4962, 356.43)
+cast_shadow = 0
+pixel_size = 0.4544
+render_priority = 2
+texture = ExtResource("6_dr62j")
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform3D(-0.558316, -0.306721, 0.770847, -0.0384412, 0.937714, 0.345276, -0.828737, 0.163141, -0.535332, -163.782, -8.06573, 312.586)
+cast_shadow = 0
+pixel_size = 0.4544
+render_priority = 2
+texture = ExtResource("6_dr62j")
+
+[node name="Sprite3D6" type="Sprite3D" parent="."]
+transform = Transform3D(0.438549, -0.294645, 0.849034, -0.0384412, 0.937714, 0.345276, -0.897885, -0.184058, 0.399907, -217.972, 28.1901, 104.108)
+cast_shadow = 0
+pixel_size = 0.6
+render_priority = 2
+texture = ExtResource("6_dr62j")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(0.792827, 0.435554, 0.426285, -0.481494, 0.87645, 0, -0.373617, -0.205253, 0.904589, 81.9163, -103.38, -167.368)
+cast_shadow = 0
+pixel_size = 0.4544
+render_priority = 2
+texture = ExtResource("7_aw2lf")
+
+[node name="Sprite3D5" type="Sprite3D" parent="."]
+transform = Transform3D(0.180583, -0.137213, 0.973942, 0.0918896, 0.988244, 0.12219, -0.979258, 0.0674296, 0.191069, -59.4831, -10.2579, 139.555)
+cast_shadow = 0
+pixel_size = 0.4544
+render_priority = 2
+texture = ExtResource("7_aw2lf")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.15811, -2.41704, -10.8252)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.95895, 2.38419e-07)
+radius = 3.26416
+height = 27.6637
+sides = 16
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.98507, -7.52503e-09, -0.172153, 7.52503e-09, 1, -6.52598e-10, 0.172153, -6.52598e-10, 0.98507, 2.7489, 0, 0.525255)
+operation = 2
+size = Vector3(2.98157, 12.1189, 7.08496)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.996061, 3.87581e-09, 0.0886683, -3.87582e-09, 1, -1.72172e-10, -0.0886683, -1.72168e-10, 0.996061, -2.58867, 0, 0.525255)
+operation = 2
+size = Vector3(2.98157, 12.1189, 7.08496)
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.39487, -1.93831)
+radius = 0.838689
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -1.39091e-08, 1, 0, -1, -1.39091e-08, 12.1008, -14.2882, 9.21476)
+radius = 11.3233
+height = 29.9757
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94851, -11.2798, -2.0003)
+radius = 3.74875

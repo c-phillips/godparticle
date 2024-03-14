@@ -1,0 +1,145 @@
+[gd_scene load_steps=13 format=3 uid="uid://bo0rw1sc5thvi"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_hv6c7"]
+[ext_resource type="PackedScene" uid="uid://dr6vysoyfh5cj" path="res://level_base.tscn" id="2_li2il"]
+[ext_resource type="PackedScene" uid="uid://40io0njltmc3" path="res://menu.tscn" id="6_66myy"]
+[ext_resource type="AudioStream" uid="uid://523nqi4bs0ck" path="res://sounds/shortcuts_deluxe/Full Song/Shortcuts.wav" id="7_rkc56"]
+[ext_resource type="AudioStream" uid="uid://otwsulu1wy2i" path="res://sounds/shortcuts_deluxe/Loops/Loop 2_2.wav" id="8_7h1va"]
+[ext_resource type="FontFile" uid="uid://cj43jlhnevx3t" path="res://fonts/Outfit-VariableFont_wght.ttf" id="9_opbbr"]
+[ext_resource type="AudioStream" uid="uid://dpks4ihs42gl0" path="res://sounds/shortcuts_deluxe/SFX/Voco-Stutter.wav" id="10_3i06l"]
+[ext_resource type="AudioStream" uid="uid://djs7t3qh8rc82" path="res://sounds/shortcuts_deluxe/Loops/Loop 6_2.wav" id="10_jjx8g"]
+[ext_resource type="AudioStream" uid="uid://dp2ulug2o3qqb" path="res://sounds/shortcuts_deluxe/Chimes/Chime 24.wav" id="11_5wsgv"]
+[ext_resource type="AudioStream" uid="uid://h64sub6loa3b" path="res://sounds/shortcuts_deluxe/SFX/Robo-Stutter.wav" id="12_nfelv"]
+
+[sub_resource type="FontVariation" id="FontVariation_osaqb"]
+base_font = ExtResource("9_opbbr")
+variation_opentype = {
+2003265652: 900
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_fqnmp"]
+font = SubResource("FontVariation_osaqb")
+font_size = 120
+
+[node name="GameRoot" type="Node3D"]
+process_mode = 3
+script = ExtResource("1_hv6c7")
+
+[node name="LevelBase" parent="." instance=ExtResource("2_li2il")]
+
+[node name="Menu" parent="." instance=ExtResource("6_66myy")]
+visible = false
+
+[node name="MainTrack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_rkc56")
+volume_db = -1.0
+
+[node name="GameOverA" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_3i06l")
+volume_db = -6.0
+
+[node name="GameOverB" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_5wsgv")
+volume_db = -3.0
+
+[node name="GameOverC" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_nfelv")
+
+[node name="WaitingMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_7h1va")
+volume_db = -10.0
+
+[node name="Options" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Container" type="Control" parent="Options"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Options/Container"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -9.0
+offset_right = 302.0
+offset_bottom = 83.0
+rotation = -0.0387468
+color = Color(0.780392, 0.517647, 0.72549, 1)
+
+[node name="WatchIntroButton" type="CheckButton" parent="Options/Container"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 24.0
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+button_pressed = true
+text = "Watch Intro"
+flat = true
+
+[node name="LoadingBar" type="Control" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LoadingBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.5
+anchor_right = 0.9
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -100.0
+offset_right = -1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0174533
+color = Color(0.945098, 0, 0.972549, 0.501961)
+
+[node name="Label" type="Label" parent="LoadingBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -382.0
+offset_top = -76.0
+offset_right = 382.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Generating..."
+label_settings = SubResource("LabelSettings_fqnmp")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="LoadingBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.7
+anchor_right = 0.5
+anchor_bottom = 0.7
+offset_left = -41.0
+offset_top = -31.0
+offset_right = 41.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(3, 3)
+mouse_default_cursor_shape = 2
+text = "Go Again!"
+
+[node name="WinnerSounds" type="AudioStreamPlayer" parent="LoadingBar"]
+stream = ExtResource("10_jjx8g")
+
+[connection signal="pressed" from="LoadingBar/Button" to="." method="restart"]

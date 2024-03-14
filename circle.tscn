@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgramu8ni5iui"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yd1ie"]
+transparency = 1
+albedo_color = Color(0.952941, 0.752941, 1, 0.0784314)
+emission_enabled = true
+emission = Color(0.835294, 0.439216, 0.996078, 1)
+emission_energy_multiplier = 0.04
+distance_fade_mode = 1
+distance_fade_min_distance = 0.5
+distance_fade_max_distance = 50.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_fe5b5"]
+material = SubResource("StandardMaterial3D_yd1ie")
+inner_radius = 15.0
+outer_radius = 15.5
+rings = 32
+ring_segments = 16
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_fe5b5")

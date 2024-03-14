@@ -1,0 +1,88 @@
+[gd_scene load_steps=15 format=3 uid="uid://dvkl3cqbp55in"]
+
+[ext_resource type="Shape2D" uid="uid://onlk75dnxfkj" path="res://hex_collider_a.tres" id="1_hxxws"]
+[ext_resource type="Script" path="res://Dice2D.gd" id="1_omgy0"]
+[ext_resource type="Texture2D" uid="uid://ba3vof4yy1yvs" path="res://sprites/dust.png" id="3_cxnen"]
+[ext_resource type="Texture2D" uid="uid://mmpfubco81t0" path="res://sprites/dice/dice_flat.png" id="3_mk04b"]
+[ext_resource type="Texture2D" uid="uid://c3tyqlotac23m" path="res://sprites/dice/pips/1.png" id="4_adfpt"]
+[ext_resource type="Texture2D" uid="uid://bermycfsmduew" path="res://sprites/dice/spotlight.png" id="5_4fcnr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_685j0"]
+bounce = 0.31
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3j5jl"]
+size = Vector2(100, 86)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0d58k"]
+size = Vector2(86, 86)
+
+[sub_resource type="Curve" id="Curve_s60dk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.297521, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jykef"]
+curve = SubResource("Curve_s60dk")
+
+[sub_resource type="Curve" id="Curve_50noy"]
+_data = [Vector2(0.00413223, 0.563908), 0.0, 0.0, 0, 0, Vector2(0.508264, 0.907689), 0.0, 0.0, 0, 0, Vector2(1, 0.242409), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8vai2"]
+curve = SubResource("Curve_50noy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uumqh"]
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -200, 0)
+emission_shape = 3
+emission_box_extents = Vector3(100, 200, 1)
+gravity = Vector3(0, 100, 0)
+scale_min = 0.05
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_8vai2")
+color = Color(0.937255, 0.901961, 0, 1)
+alpha_curve = SubResource("CurveTexture_jykef")
+turbulence_enabled = true
+turbulence_noise_strength = 6.86
+turbulence_influence_max = 0.181
+
+[node name="RigidBody2D" type="RigidBody2D"]
+process_mode = 3
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_685j0")
+gravity_scale = 0.0
+script = ExtResource("1_omgy0")
+
+[node name="LinearCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3j5jl")
+disabled = true
+
+[node name="SquareCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0d58k")
+
+[node name="HexCollider" type="CollisionShape2D" parent="."]
+shape = ExtResource("1_hxxws")
+disabled = true
+
+[node name="spotlight" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.25, 0.5)
+texture = ExtResource("5_4fcnr")
+offset = Vector2(0, -1125)
+
+[node name="Sparkles" type="GPUParticles2D" parent="spotlight"]
+scale = Vector2(4, 2)
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_uumqh")
+texture = ExtResource("3_cxnen")
+lifetime = 2.0
+
+[node name="sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.33, 0.33)
+texture = ExtResource("3_mk04b")
+
+[node name="pips" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("4_adfpt")

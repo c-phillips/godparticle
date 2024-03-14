@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://bbd30ammu5rn4"]
+
+[ext_resource type="Script" path="res://gate.gd" id="1_awag1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vlx8"]
+albedo_color = Color(0.890196, 0.670588, 0.117647, 1)
+metallic = 0.71
+roughness = 0.37
+
+[sub_resource type="TorusMesh" id="TorusMesh_wc2kr"]
+material = SubResource("StandardMaterial3D_2vlx8")
+inner_radius = 2.0
+outer_radius = 2.1
+rings = 32
+ring_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6g12"]
+transparency = 1
+albedo_color = Color(0.258824, 0.988235, 0.941176, 0.152941)
+emission = Color(0.6, 0.894118, 1, 1)
+emission_energy_multiplier = 0.76
+clearcoat_enabled = true
+distance_fade_mode = 2
+distance_fade_min_distance = 2.0
+distance_fade_max_distance = 20.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pq5vd"]
+material = SubResource("StandardMaterial3D_g6g12")
+top_radius = 2.05
+bottom_radius = 2.05
+height = 0.05
+radial_segments = 16
+rings = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ab0sl"]
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(0, -0.25, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 2.1
+emission_ring_inner_radius = 0.0
+angle_max = 360.0
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, -1, 0)
+spread = 69.0
+initial_velocity_min = 435.29
+initial_velocity_max = 764.71
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k7m0l"]
+albedo_color = Color(0.819608, 0.823529, 0.498039, 1)
+emission_enabled = true
+emission = Color(0.972549, 0.980392, 0.976471, 1)
+emission_energy_multiplier = 4.66
+
+[sub_resource type="PrismMesh" id="PrismMesh_71pdl"]
+material = SubResource("StandardMaterial3D_k7m0l")
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vxmla"]
+margin = 0.005
+radius = 2.1
+
+[node name="Gate" type="Area3D"]
+script = ExtResource("1_awag1")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_wc2kr")
+
+[node name="Glass" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CylinderMesh_pq5vd")
+
+[node name="ContactParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 256
+lifetime = 0.86
+one_shot = true
+explosiveness = 1.0
+randomness = 0.63
+process_material = SubResource("ParticleProcessMaterial_ab0sl")
+draw_pass_1 = SubResource("PrismMesh_71pdl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_vxmla")

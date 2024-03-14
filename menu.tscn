@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://40io0njltmc3"]
+
+[ext_resource type="Script" path="res://Menu.gd" id="1_tyc1i"]
+[ext_resource type="Script" path="res://Button3D.gd" id="2_u4la0"]
+[ext_resource type="Script" path="res://MenuCountdown.gd" id="2_v4yh3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mc7wr"]
+size = Vector3(3.54514, 1.71735, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cyrmf"]
+size = Vector3(4, 1.6, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3jlu1"]
+size = Vector3(3, 1.6, 0.02)
+
+[sub_resource type="LabelSettings" id="LabelSettings_aq0vv"]
+font_size = 256
+
+[node name="Menu" type="Node3D"]
+process_mode = 2
+script = ExtResource("1_tyc1i")
+pause_timer = 3.5
+buttons = [NodePath("RestartBtn"), NodePath("ExitBtn")]
+
+[node name="RestartBtn" type="Area3D" parent="."]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 4, 2, -1)
+script = ExtResource("2_u4la0")
+action = 2
+
+[node name="PickShape" type="CollisionShape3D" parent="RestartBtn"]
+transform = Transform3D(0.999997, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 0.999997, 0.122785, -0.0489807, 2.38419e-07)
+shape = SubResource("BoxShape3D_mc7wr")
+
+[node name="Label" type="Label3D" parent="RestartBtn"]
+pixel_size = 0.02
+text = "Restart"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RestartBtn/Label"]
+transform = Transform3D(0.996761, 0.0465615, -0.0656006, -0.0494523, 0.997844, -0.0431483, 0.0634504, 0.0462526, 0.996914, 0.202964, 0, -1)
+mesh = SubResource("BoxMesh_cyrmf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="RestartBtn/Label"]
+light_color = Color(0.94902, 0.87451, 0, 1)
+
+[node name="ExitBtn" type="Area3D" parent="."]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 4, -2, -1)
+script = ExtResource("2_u4la0")
+action = 3
+
+[node name="PickShape" type="CollisionShape3D" parent="ExitBtn"]
+transform = Transform3D(0.999997, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 0.999997, 0.122785, -0.0489807, 2.38419e-07)
+shape = SubResource("BoxShape3D_mc7wr")
+
+[node name="Label" type="Label3D" parent="ExitBtn"]
+pixel_size = 0.02
+text = "Exit"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExitBtn/Label"]
+transform = Transform3D(0.946374, 0.0330039, -0.321386, 0.116808, 0.892522, 0.435616, 0.301221, -0.449794, 0.840805, 0.220046, 0, -0.329116)
+mesh = SubResource("BoxMesh_3jlu1")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ExitBtn/Label"]
+light_color = Color(0.94902, 0.87451, 0, 1)
+
+[node name="Countdown" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_aq0vv")
+horizontal_alignment = 1
+script = ExtResource("2_v4yh3")

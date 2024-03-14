@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtsa5a7elxrya"]
+
+[sub_resource type="Curve" id="Curve_cepa2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.49812, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3142x"]
+transparency = 1
+albedo_color = Color(0.941176, 0.792157, 1, 0.403922)
+emission_enabled = true
+emission = Color(0.847059, 0.309804, 0.996078, 1)
+emission_energy_multiplier = 4.18
+disable_receive_shadows = true
+proximity_fade_distance = 154.41
+distance_fade_min_distance = 1.0
+distance_fade_max_distance = 30.0
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_c4a2c"]
+material = SubResource("StandardMaterial3D_3142x")
+radius = 0.025
+section_length = 1.0
+curve = SubResource("Curve_cepa2")
+
+[node name="Bloop" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TubeTrailMesh_c4a2c")

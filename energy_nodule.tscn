@@ -1,0 +1,118 @@
+[gd_scene load_steps=15 format=3 uid="uid://dsn7jutrxlanq"]
+
+[ext_resource type="Script" path="res://EnergyNodule.gd" id="1_sxsxc"]
+[ext_resource type="PackedScene" uid="uid://qabpil5il2m8" path="res://flat_energy.tscn" id="2_mik6i"]
+[ext_resource type="AudioStream" uid="uid://b5rvlc35jt57f" path="res://sounds/shortcuts_deluxe/Chimes/Chime 2.wav" id="3_mdiuo"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2nx1t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkpyr"]
+albedo_color = Color(0.882353, 0.764706, 0.215686, 1)
+emission_enabled = true
+emission = Color(0.87451, 0.835294, 0.278431, 1)
+emission_energy_multiplier = 0.46
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_it7sy"]
+material = SubResource("StandardMaterial3D_wkpyr")
+radius = 0.2
+height = 0.5
+radial_segments = 12
+rings = 5
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_15ypm"]
+lifetime_randomness = 0.37
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -30.98
+tangential_accel_max = 27.84
+damping_max = 45.882
+turbulence_noise_speed_random = 0.81
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6rye"]
+albedo_color = Color(0.972549, 0.827451, 0.227451, 1)
+emission_enabled = true
+emission = Color(0.870588, 0.898039, 0.760784, 1)
+emission_energy_multiplier = 0.82
+
+[sub_resource type="SphereMesh" id="SphereMesh_krdpp"]
+material = SubResource("StandardMaterial3D_u6rye")
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 4
+
+[sub_resource type="Curve" id="Curve_ipj0u"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hne77"]
+curve = SubResource("Curve_ipj0u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ksn75"]
+lifetime_randomness = 0.84
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 0.5
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 0, 1)
+spread = 78.353
+initial_velocity_min = 1.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.25
+scale_max = 0.9
+scale_over_velocity_min = 0.5
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveTexture_hne77")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mkw0j"]
+albedo_color = Color(0.968627, 0.898039, 0.380392, 1)
+emission_enabled = true
+emission = Color(0.247059, 0.458824, 0.666667, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_5b2p2"]
+material = SubResource("StandardMaterial3D_mkw0j")
+inner_radius = 0.053
+outer_radius = 0.105
+rings = 8
+ring_segments = 8
+
+[node name="Area3D" type="Area3D"]
+script = ExtResource("1_sxsxc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_2nx1t")
+
+[node name="EnergyMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_it7sy")
+skeleton = NodePath("")
+
+[node name="Floopies" type="GPUParticles3D" parent="."]
+visible = false
+amount = 32
+lifetime = 0.55
+explosiveness = 0.13
+randomness = 0.36
+process_material = SubResource("ParticleProcessMaterial_15ypm")
+draw_pass_1 = SubResource("SphereMesh_krdpp")
+
+[node name="EnergyParticles" type="GPUParticles3D" parent="."]
+visible = false
+emitting = false
+amount = 24
+lifetime = 0.9
+one_shot = true
+explosiveness = 1.0
+randomness = 0.19
+process_material = SubResource("ParticleProcessMaterial_ksn75")
+draw_pass_1 = SubResource("TorusMesh_5b2p2")
+
+[node name="FlatEnergy" parent="." instance=ExtResource("2_mik6i")]
+visible = false
+
+[node name="BloopSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_mdiuo")
+volume_db = -3.0

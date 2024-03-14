@@ -1,0 +1,321 @@
+[gd_scene load_steps=15 format=3 uid="uid://dpfetpjcyyttj"]
+
+[ext_resource type="FontFile" uid="uid://cj43jlhnevx3t" path="res://fonts/Outfit-VariableFont_wght.ttf" id="1_fbeyo"]
+[ext_resource type="Script" path="res://intro_cinematic.gd" id="1_y1e7y"]
+[ext_resource type="Texture2D" uid="uid://dskbd1q63041v" path="res://cinematics/intro/sign.png" id="2_87cbb"]
+[ext_resource type="Texture2D" uid="uid://dpn167e53m388" path="res://cinematics/intro/reading.png" id="3_3blp1"]
+[ext_resource type="Texture2D" uid="uid://fy8exg7hvnsi" path="res://cinematics/intro/upsetti.png" id="4_i1yys"]
+[ext_resource type="Texture2D" uid="uid://dlr2yuh57elne" path="res://cinematics/intro/usuck.png" id="5_kamuq"]
+[ext_resource type="Texture2D" uid="uid://c8mli1tt10ura" path="res://cinematics/intro/button.png" id="6_xrkp5"]
+[ext_resource type="Texture2D" uid="uid://scq734a4orgf" path="res://cinematics/intro/finger.png" id="7_tnh7e"]
+[ext_resource type="Texture2D" uid="uid://n4x7te3ny377" path="res://cinematics/intro/infographic.png" id="8_lcbtw"]
+[ext_resource type="Texture2D" uid="uid://ygq2huv254jr" path="res://cinematics/intro/tutorial.png" id="10_tnd17"]
+
+[sub_resource type="Animation" id="Animation_aquvn"]
+resource_name = "IntroCinematic"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SceneA:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SceneA/Reading:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(458, 704), Vector2(1462, 704)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SceneA/Sign:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2505, 203), Vector2(288, 203)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SceneB:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(4.075, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SceneB/Usuck:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(4.075, 5.2, 6.6, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-20, 1485), Vector2(729, 773), Vector2(729, 773), Vector2(-418, 1341)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SceneB/Usuck:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(4.075, 5.2, 6.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.523599, 0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SceneB/Upsetti:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(6.6, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3110, 934), Vector2(1278, 798)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SceneC:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(10, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SceneC/Button:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(10, 12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-735, 897), Vector2(861, 897)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("SceneC/Finger:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(10, 12, 13),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2718, 301), Vector2(2718, 301), Vector2(1660, 301)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SceneD:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(15, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("SceneD/Infographic:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(15, 16.5, 17.5, 18.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(939, 1918), Vector2(939, 1108), Vector2(939, 1108), Vector2(939, 66)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("SceneD/Label:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(17.5, 18.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(306, 1231), Vector2(306, 894)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("SceneE:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(20),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nvefi"]
+_data = {
+"IntroCinematic": SubResource("Animation_aquvn")
+}
+
+[sub_resource type="FontVariation" id="FontVariation_yrjjr"]
+base_font = ExtResource("1_fbeyo")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_q4yiy"]
+font = SubResource("FontVariation_yrjjr")
+font_size = 50
+
+[node name="IntroCinematic" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y1e7y")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.164706, 0.290196, 0.839216)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nvefi")
+}
+
+[node name="SceneA" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sign" type="Sprite2D" parent="SceneA"]
+position = Vector2(288, 203)
+texture = ExtResource("2_87cbb")
+
+[node name="Reading" type="Sprite2D" parent="SceneA"]
+position = Vector2(1462, 704)
+texture = ExtResource("3_3blp1")
+
+[node name="SceneB" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Upsetti" type="Sprite2D" parent="SceneB"]
+position = Vector2(1278, 798)
+scale = Vector2(0.663295, 0.663295)
+texture = ExtResource("4_i1yys")
+
+[node name="Usuck" type="Sprite2D" parent="SceneB"]
+position = Vector2(-418, 1341)
+texture = ExtResource("5_kamuq")
+
+[node name="SceneC" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Sprite2D" parent="SceneC"]
+position = Vector2(861, 897)
+texture = ExtResource("6_xrkp5")
+
+[node name="Finger" type="Sprite2D" parent="SceneC"]
+position = Vector2(1660, 301)
+texture = ExtResource("7_tnh7e")
+
+[node name="SceneD" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Infographic" type="Sprite2D" parent="SceneD"]
+position = Vector2(939, 66)
+scale = Vector2(0.607671, 0.607671)
+texture = ExtResource("8_lcbtw")
+
+[node name="Label" type="Label" parent="SceneD"]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 894.0
+offset_right = 1006.0
+offset_bottom = 957.0
+text = "Remember to use your abilities!"
+label_settings = SubResource("LabelSettings_q4yiy")
+
+[node name="SceneE" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tutorial" type="Sprite2D" parent="SceneE"]
+position = Vector2(931.15, 490)
+scale = Vector2(0.488966, 0.488966)
+texture = ExtResource("10_tnd17")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.871
+anchor_top = 0.771
+anchor_right = 0.958
+anchor_bottom = 0.857
+offset_left = -0.320068
+offset_top = 0.319946
+offset_right = -111.36
+offset_bottom = -61.5601
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(3, 3)
+mouse_default_cursor_shape = 2
+text = "Skip"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

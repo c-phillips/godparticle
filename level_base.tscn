@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://dr6vysoyfh5cj"]
+
+[ext_resource type="Script" path="res://blooper.gd" id="1_ckl2m"]
+[ext_resource type="Script" path="res://MainPathProgressor.gd" id="2_r5og5"]
+[ext_resource type="PackedScene" uid="uid://5ipc81ky8ieo" path="res://player.tscn" id="3_m041v"]
+[ext_resource type="Texture2D" uid="uid://bp5bsec0o6wjj" path="res://milky-way-galaxy-night.jpg" id="4_kx8ow"]
+[ext_resource type="PackedScene" uid="uid://4xyp0ngalb4e" path="res://hand.tscn" id="5_0mdkj"]
+
+[sub_resource type="Curve3D" id="Curve3D_guhyo"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 500, 250, -500, 0.780372, 0.384521, -0.768273, -0.780372, -0.384521, 0.768273, 0, 0, 0, 10.3083, 23.7196, -87.1283, -10.3083, -23.7196, 87.1283, -257.949, -119.81, 288.19, -100.907, -110.917, -151.662, 100.907, 110.917, 151.662, 88.1818, -182.726, 948.941, 0, -99.2217, -176.376, 0, 99.2217, 176.376, 293.437, 229.033, 1375.48, 85.667, 53.1915, -136.909, -85.667, -53.1915, 136.909, -494.608, 143.208, 2118.37, 283.3, 58.6666, -148.265, -283.3, -58.6666, 148.265, -598.262, -25.9203, 2536.14, 418.065, 210.118, 356.229, -418.065, -210.118, -356.229, -2168, -352, 3572, -521.379, 543.593, 191.724, 521.379, -543.593, -191.724, -2145.12, -918.575, 2300.64, -1110.11, -527.507, -648.888, 1110.11, 527.507, 648.888, 555.66, -1895.71, 4101.97, 363.947, -179.183, 455.561, -363.947, 179.183, -455.561, 928.803, -25.9202, 2248.04, 292.596, -195.36, -628.31, -292.596, 195.36, 628.31, -1047.31, -25.9203, 1074.85, 0, 0, 0, 0, 0, 0, -605.433, -300.419, 2487.36),
+"tilts": PackedFloat32Array(0, 0, 0, -0.294229, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wyvfm"]
+panorama = ExtResource("4_kx8ow")
+
+[sub_resource type="Sky" id="Sky_056w3"]
+sky_material = SubResource("PanoramaSkyMaterial_wyvfm")
+
+[sub_resource type="Environment" id="Environment_w0dxo"]
+background_mode = 2
+sky = SubResource("Sky_056w3")
+ambient_light_color = Color(0.94902, 0.94902, 0.94902, 1)
+fog_light_color = Color(0, 0, 0, 1)
+fog_light_energy = 0.0
+fog_density = 0.005
+fog_sky_affect = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0112
+volumetric_fog_length = 0.24
+volumetric_fog_detail_spread = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oleus"]
+albedo_color = Color(0.0470588, 0.447059, 0.72549, 1)
+emission_enabled = true
+emission = Color(0.0117647, 0.141176, 0.25098, 1)
+emission_energy_multiplier = 0.41
+
+[sub_resource type="SphereMesh" id="SphereMesh_d8f0a"]
+material = SubResource("StandardMaterial3D_oleus")
+radius = 1000.0
+height = 2000.0
+
+[node name="LevelBase" type="Node3D"]
+process_mode = 1
+
+[node name="Track" type="Path3D" parent="."]
+top_level = true
+curve = SubResource("Curve3D_guhyo")
+script = ExtResource("1_ckl2m")
+num_bloops = 200
+
+[node name="Shuttle" type="PathFollow3D" parent="Track"]
+transform = Transform3D(-0.707097, -0.2357, 0.666665, 0, 0.942799, 0.333333, -0.707097, 0.2357, -0.666665, 500, 250, -500)
+loop = false
+script = ExtResource("2_r5og5")
+
+[node name="Player" parent="Track/Shuttle" node_paths=PackedStringArray("track", "shuttle") instance=ExtResource("3_m041v")]
+transform = Transform3D(-0.779046, -0.25349, -0.573438, -0.287743, 0.957161, -0.0322039, 0.557031, 0.139913, -0.818628, 0, 0, 0)
+track = NodePath("../..")
+shuttle = NodePath("..")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_w0dxo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866026, 0.186882, -0.463762, 0, 0.927523, 0.373765, 0.5, 0.32369, -0.803259, 0, 0, 0)
+light_energy = 5.056
+light_indirect_energy = 5.056
+light_volumetric_fog_energy = 0.0
+
+[node name="Earth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -900, 3000)
+mesh = SubResource("SphereMesh_d8f0a")
+
+[node name="Hand" parent="." instance=ExtResource("5_0mdkj")]
+transform = Transform3D(0.690393, -0.261908, -0.67436, -0.0685227, 0.904299, -0.421364, 0.720182, 0.337116, 0.606375, 500, 250, -500)
